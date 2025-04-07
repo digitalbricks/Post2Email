@@ -3,7 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 class Post2Email{
 
-    private string $version = "1.0.0";
+    private string $version = "1.0.1";
     private array $defaultMailConfig = array(
         'SMTPDebug' => 0,
         'isSMTP' => true,
@@ -102,25 +102,34 @@ class Post2Email{
      */
     private function sendEmail(string $sender, string $message, int $prio):void
     {
-        //var_dump($sender." -- ".$message." -- ".$prio);
+        // email / PHPMailer priority level
+        // See: http://phpmailer.github.io/PHPMailer/classes/PHPMailer-PHPMailer-PHPMailer.html#property_Priority
+        // null (default), 1 = High, 3 = Normal, 5 = low
+        $emailPriorityLevel = null;
+        
+        
         if($prio>3) $prio = 3;
 
         switch($prio){
             case 3:
                 $prioIcon = "🔴";
                 $prioText = "critical";
+                $emailPriorityLevel = 1; // high
                 break;
             case 2:
                 $prioIcon = "🟠";
                 $prioText = "high";
+                $emailPriorityLevel = 1; // high
                 break;
             case 1:
                 $prioIcon = "🟡";
                 $prioText = "low";
+                $emailPriorityLevel = 3; // normal
                 break;
             default: // 0
                 $prioIcon = "🟢";
                 $prioText = "none";
+                $emailPriorityLevel = 5; // low
                 break;
         }
 
@@ -142,14 +151,15 @@ class Post2Email{
         $mail = new PHPMailer(true);
         try {
             //Server settings
-            $mail->SMTPDebug = $this->mailConfig['SMTPDebug'];                      // Enable verbose debug output
+            $mail->SMTPDebug = $this->mailConfig['SMTPDebug'];           // Enable verbose debug output
             $mail->isSMTP();                                            // Send using SMTP
-            $mail->Host       = $this->mailConfig['Host'];                    // Set the SMTP server to send through
-            $mail->SMTPAuth   = $this->mailConfig['SMTPAuth'];                                   // Enable SMTP authentication
-            $mail->Username   = $this->mailConfig['Username'];                     // SMTP username
-            $mail->Password   = $this->mailConfig['Password'];                               // SMTP password
+            $mail->Host       = $this->mailConfig['Host'];               // Set the SMTP server to send through
+            $mail->SMTPAuth   = $this->mailConfig['SMTPAuth'];           // Enable SMTP authentication
+            $mail->Username   = $this->mailConfig['Username'];           // SMTP username
+            $mail->Password   = $this->mailConfig['Password'];           // SMTP password
             $mail->SMTPSecure = $this->mailConfig['SMTPSecure'];         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-            $mail->Port       = $this->mailConfig['Port'];                                    // TCP port to connect to
+            $mail->Port       = $this->mailConfig['Port'];               // TCP port to connect to
+            $mail->Priority   = $emailPriorityLevel;                    // X-Priority header
             $mail->CharSet    = 'UTF-8';
 
             //Recipients

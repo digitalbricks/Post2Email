@@ -46,12 +46,12 @@ To send an email, you have to do a HTTP POST to the URL of the script, supplemen
 ```bash
 curl --json '{"sdr":"Proxmox backup", "msg":"Rsync to offsite location finished.", "prio":0}' https://path-to-script/?key=YOUR_s3cr3tK3y
 ```
-For the `prio`property, the following values are available at the moment (which basically changes the emoji color in the subject line of the email):
+For the `prio`property, the following values are available at the moment (which basically changes the emoji color in the subject line of the email) and the `X-Priority` mail header:
 
-| prio    | Description | Icon
-| ------- | ----------- | -----
-| 0       | none        | 🟢
-| 1       | low         | 🟡
-| 2       | high        | 🟠
-| 3       | critical    | 🔴
+| prio    | Description | Icon  | X-Priority
+| ------- | ----------- | ----- | ----------
+| 0       | none        | 🟢    | 5 (low)
+| 1       | low         | 🟡    | 3 (normal)
+| 2       | high        | 🟠    | 1 (high)
+| 3       | critical    | 🔴    | 1 (high)
 
