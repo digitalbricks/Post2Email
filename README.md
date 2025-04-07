@@ -6,7 +6,7 @@ If you need notifications pushed to your smartphone, you want to have a look at 
 **Please note:** I've written the script with homelab usage only in mind. So if you place the script on a public server you may want to utilize extra measurements against unauthorized use. Maybe [HTTP Basic Auth](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Authentication) will be your friend.
 
 ## Installation
-The script uses the [PHPMailer classes](https://github.com/PHPMailer/PHPMailer) for communicating with the SMTP server. PHPMailer is **not included** in this repository and has to be installed using Composer:
+The script uses the [PHPMailer classes](https://github.com/PHPMailer/PHPMailer) for communicating with the SMTP server. PHPMailer is **not included** in this repository and has to be installed using Composer. So download the content of this repo to your machine, extract and `cd` into the directory, than install PHPMailer dependency with Composer:
 
 ```bash
 composer install
