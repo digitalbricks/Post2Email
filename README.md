@@ -3,6 +3,8 @@ This is a small PHP script that acts as a proxy for sending emails using SMTP, b
 
 If you need notifications pushed to your smartphone, you want to have a look at more advanced solutions such as [NTFY](https://ntfy.sh/) or [Gotify](https://gotify.net/). But I am a email guy, tending to forget about push notifications popped up on my phone during the day. So I wrote this script – running on my DiskStation – in order to send email notifications from scripts in my homelab.
 
+**Please note:** I've written the script with homelab usage only in mind. So if you place the script on a public server you may want to utilize extra measurements against unauthorized use. Maybe [HTTP Basic Auth](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Authentication) will be your friend.
+
 ## Installation
 The script uses the [PHPMailer classes](https://github.com/PHPMailer/PHPMailer) for communicating with the SMTP server. PHPMailer is **not included** in this repository and has to be installed using Composer:
 
@@ -42,7 +44,7 @@ $allowedKeys = [
 To send an email, you have to do a HTTP POST to the URL of the script, supplemented by one of the previously defined keys. This POST has to be JSON, containing at least a `msg`(message) property. `sdr`(sender) and `prio`(priority) are optional. Here is an example of such a HTTP POST, using cURL from the command line:
 
 ```bash
-curl --json '{"sdr":"Proxmox backup", "msg":"Rsync to offsite location finished.", "prio":0}' http://path-to-script/?key=YOUR_s3cr3tK3y
+curl --json '{"sdr":"Proxmox backup", "msg":"Rsync to offsite location finished.", "prio":0}' https://path-to-script/?key=YOUR_s3cr3tK3y
 ```
 For the `prio`property, the following values are available at the moment (which basically changes the emoji color in the subject line of the email):
 
