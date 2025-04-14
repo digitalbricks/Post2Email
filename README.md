@@ -59,7 +59,7 @@ For the `prio`property, the following values are available at the moment (which 
 ---
 
 ## Note on cURL before v7.82
-The `--json` flag used in the example above is available sind cURL 7.82. To send JSON requests using older cURL versions, you may use this command:
+The `--json` flag used in the example above is available since cURL 7.82. In order to send JSON requests using older cURL versions, you may use this command:
 
 ```bash
 curl -X POST https://path-to-script/?key=YOUR_s3cr3tK3y \
