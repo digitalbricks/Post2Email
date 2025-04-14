@@ -55,3 +55,14 @@ For the `prio`property, the following values are available at the moment (which 
 | 2       | high        | 🟠    | 1 (high)
 | 3       | critical    | 🔴    | 1 (high)
 
+
+---
+
+## Note on cURL before v7.82
+The `--json` flag used in the example above is available sind cURL 7.82. To send JSON requests using older cURL versions, you may use this command:
+
+```bash
+curl -X POST https://path-to-script/?key=YOUR_s3cr3tK3y \
+  -H "Content-Type: application/json" \
+  -d '{"sdr":"Proxmox backup", "msg":"Rsync to offsite location finished.", "prio":0}'
+```
